@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "name": "Karma nära",
+    "slug": "karma-nara",
+    "privacy": "public",
+    "sdkVersion": "32.0.0",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "android": {
+      "package": "com.karma.nara"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "description": "Karma nära allows you to see the nearest eating places around the Karma HQ. Bon appétit!"
+  }
+}

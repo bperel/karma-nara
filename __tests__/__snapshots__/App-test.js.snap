@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App snapshot calculates distances from HQ for each location 1`] = `0`;
+
+exports[`App snapshot calculates distances from HQ for each location 2`] = `539`;
+
+exports[`App snapshot handles already followed locations 1`] = `true`;
+
+exports[`App snapshot resets locations to not followed by default 1`] = `false`;
+
+exports[`App snapshot resets locations to not followed by default 2`] = `false`;
