@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, SectionHeader, SectionList, StyleSheet, Text, View} from "react-native";
+import {Image, SectionList, StyleSheet, Text, View} from "react-native";
 import {Constants} from "expo";
 
 const ListHeader = () => {
@@ -32,19 +32,19 @@ export default class AboutScreen extends React.Component {
   };
 
   render() {
-    const { manifest } = Constants;
     const sections = [
-      { data: [{ value: manifest.sdkVersion }], title: 'sdkVersion' },
+      { data: ['Bon appétit!'] },
     ];
-    return <SectionList
-        style={styles.container}
-        renderItem={item => <Text>{item.value}</Text>}
-        renderSectionHeader={this._renderSectionHeader}
+    return <View style={styles.container}>
+      <ListHeader />
+      <SectionList
+        contentContainerStyle={styles.listView}
+        renderItem={({item}) => <Text style={styles.section}>{item}</Text>}
         stickySectionHeadersEnabled={true}
         keyExtractor={(item, index) => index}
-        ListHeaderComponent={ListHeader}
         sections={sections}
-    />;
+      />
+    </View>;
   }
 }
 
@@ -52,11 +52,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-  },
-  titleContainer: {
     paddingHorizontal: 15,
     paddingTop: 15,
     paddingBottom: 15,
+  },
+  titleContainer: {
     flexDirection: 'row',
     alignItems: 'center'
   },
@@ -67,5 +67,13 @@ const styles = StyleSheet.create({
   nameText: {
     fontWeight: '600',
     fontSize: 18,
+  },
+  listView: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  section: {
+    paddingTop: 15,
+    fontSize: 24
   }
 });

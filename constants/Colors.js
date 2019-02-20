@@ -5,7 +5,7 @@ export default {
   tintColor,
   tabIconDefault: '#ccc',
   tabIconSelected: tintColor,
-  followButtonDefault: tintColor,
+  followButtonDefault: 'black',
   followButtonSelected: selectedButtonColor,
   closeDistance: 'green',
   notTooFarDistance: 'orange',
