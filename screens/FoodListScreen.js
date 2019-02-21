@@ -12,6 +12,7 @@ export default class FoodListScreen extends React.Component {
   state = {
     isLoadingComplete: false,
     locations: [],
+    followedLocations: []
   };
 
   fetchAndBuildLocations = () => (
@@ -30,14 +31,9 @@ export default class FoodListScreen extends React.Component {
       .catch((error) => {
         console.error(error);
       })
-      .then(() => AsyncStorage.getItem('followedLocations'))
+      .then(() => AsyncStorage.getItem('followedLocationIds'))
       .then(followedLocations => {
-        let followedLocationIds = (JSON.parse(followedLocations) || []).map(followedLocation => followedLocation.id);
-        this.setState(prevState => (
-          {...prevState, locations: prevState.locations.map(location => (
-            {...location, following: followedLocationIds.includes(location.id)}
-          ))}
-        ));
+        this.setState({followedLocations: JSON.parse(followedLocations) || {}});
       })
       .finally(() => {
         this.setState({isLoadingComplete: true});
@@ -49,14 +45,12 @@ export default class FoodListScreen extends React.Component {
   }
 
   toggleFollowFoodPlace(foodPlace) {
-    this.setState(prevState => {
-      prevState.locations.filter(location => location.id === foodPlace.id)[0].following = !foodPlace.following;
-      AsyncStorage.setItem('followedLocations', JSON.stringify(this.state.locations.filter(location => !!location.following)));
-      return prevState;
-    });
-  }
+    let followedLocations = this.state.followedLocations;
+    followedLocations[foodPlace.id] = !followedLocations[foodPlace.id];
+    this.setState({followedLocations});
 
-  isFollowing = locationId => !!this.state.locations.filter(location => location.id === locationId)[0].following;
+    AsyncStorage.setItem('followedLocationIds', JSON.stringify(followedLocations));
+  }
 
   render() {
     return (
@@ -66,12 +60,13 @@ export default class FoodListScreen extends React.Component {
           style={styles.flatlist}
           keyExtractor={foodPlace => foodPlace.id.toString()}
           data={this.state.locations}
+          extraData={this.state}
           renderItem={({item: foodPlace}) =>
             <View style={styles.flatlistItem}>
               <View style={styles.follow}>
-                <Button color={this.isFollowing(foodPlace.id) ? Colors.followButtonSelected : Colors.followButtonDefault}
-                  title={ this.isFollowing(foodPlace.id) ? "Followed" : "Follow"}
-                  onPress={() => { this.toggleFollowFoodPlace(foodPlace) }} />
+                <Button color={this.state.followedLocations[foodPlace.id] ? Colors.followButtonSelected : Colors.followButtonDefault}
+                        title={ this.state.followedLocations[foodPlace.id] ? "Followed" : "Follow"}
+                        onPress={() => { this.toggleFollowFoodPlace(foodPlace) }} />
               </View>
               <View style={styles.foodPlaceInfo}>
                 <Text style={styles.name}>{foodPlace.name}</Text>
