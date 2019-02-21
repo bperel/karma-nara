@@ -46,9 +46,9 @@ describe('App snapshot', () => {
   });
 
   it('handles already followed locations', async () => {
-    await nativeStorage.setItem('followedLocations', JSON.stringify([{id: 2, following: true}]));
+    await nativeStorage.setItem('followedLocationIds', JSON.stringify({2: true}));
     const wrapper = shallow(<FoodListScreen />);
     await wrapper.instance().componentDidMount();
-    expect(wrapper.state('locations')[1].following).toMatchSnapshot();
+    expect(wrapper.state('followedLocations')[2]).toMatchSnapshot();
   });
 });
